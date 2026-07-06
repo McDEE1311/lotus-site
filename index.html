@@ -601,7 +601,7 @@
         <p>Fill out what you can — only name, email, phone, and consent are required. The more you share, the more specific your audit will be. Prefer paper? Use the <b>Print This Form</b> button and sign by hand.</p>
       </div>
 
-      <form id="leadForm" class="audit-form">
+      <form id="leadForm" class="audit-form" action="https://formspree.io/f/mqevnjey" method="POST">
 
         <fieldset>
           <legend>Business Information</legend>
@@ -723,44 +723,36 @@
     document.getElementById('navLinks').classList.toggle('open');
   });
 
-  // lead form -> mailto submission (no backend required)
+  // lead form -> Formspree submission (works regardless of visitor's mail client setup)
   document.getElementById('leadForm').addEventListener('submit', function(e){
     e.preventDefault();
     var f = e.target;
+    var note = f.querySelector('.field-note');
     var data = new FormData(f);
     var challenges = data.getAll('challenge').join(', ') || 'n/a';
-    var lines = [
-      '--- BUSINESS INFORMATION ---',
-      'Business Name: ' + data.get('business'),
-      'Owner Name: ' + data.get('owner'),
-      'Email: ' + data.get('email'),
-      'Phone: ' + data.get('phone'),
-      'Website: ' + (data.get('website') || 'n/a'),
-      'Business Address: ' + (data.get('address') || 'n/a'),
-      'Industry: ' + (data.get('industry') || 'n/a'),
-      'Number of Employees: ' + (data.get('employees') || 'n/a'),
-      'Years in Business: ' + (data.get('years') || 'n/a'),
-      '',
-      '--- CURRENT ONLINE PRESENCE ---',
-      'Google Business Profile: ' + (data.get('gbp') || 'n/a'),
-      'Facebook: ' + (data.get('facebook') || 'n/a'),
-      'Instagram: ' + (data.get('instagram') || 'n/a'),
-      'LinkedIn: ' + (data.get('linkedin') || 'n/a'),
-      'TikTok: ' + (data.get('tiktok') || 'n/a'),
-      'YouTube: ' + (data.get('youtube') || 'n/a'),
-      '',
-      '--- CHALLENGES & GOALS ---',
-      'Current Challenges: ' + challenges,
-      '6-Month Goals: ' + (data.get('goals') || 'n/a'),
-      '',
-      '--- CONSENT ---',
-      'Consent given (electronic signature): ' + (data.get('consent') ? 'YES' : 'NO')
-    ];
-    var subject = 'Free Business Audit Request: ' + (data.get('business') || data.get('owner'));
-    var body = lines.join('\n');
-    var mailto = 'mailto:info@lotusintell.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    window.location.href = mailto;
-    f.querySelector('.field-note').textContent = "Opening your email client to send this to info@lotusintell.com — if it doesn't open, call or text 931-308-8967 directly.";
+    // human-readable summary field, so the Formspree notification email is easy to read
+    data.append('_subject', 'Free Business Audit Request: ' + (data.get('business') || data.get('owner')));
+    data.append('Challenges Selected', challenges);
+
+    note.style.color = 'var(--fog-dim)';
+    note.textContent = 'Sending…';
+
+    fetch(f.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
+      if (response.ok) {
+        f.reset();
+        note.style.color = 'var(--emerald)';
+        note.textContent = "Thanks — your audit request was sent. We'll be in touch within one business day.";
+      } else {
+        throw new Error('submission failed');
+      }
+    }).catch(function(){
+      note.style.color = '#f87171';
+      note.textContent = "That didn't go through — please call or text 931-308-8967, or email info@lotusintell.com directly.";
+    });
   });
 
   // scroll reveal
