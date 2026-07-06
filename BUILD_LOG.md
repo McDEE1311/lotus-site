@@ -89,6 +89,62 @@ technology.
 
 ---
 
+## v7 — Free Business Audit intake form
+
+Replaced the lightweight contact/lead form with a full intake form matching
+the "Form 1: Free Business Audit" spec developed with GPT (business info,
+online presence links, challenge checkboxes, goals, consent). Built directly
+into the site rather than as a separate PDF or third-party form tool
+(Jotform/Typeform) — consistent with the existing single-file, zero-monthly-
+cost architecture. GPT's own conclusion on this question ("Option 1: build
+it into the website") matched what was already true of this site, so no new
+tooling was introduced.
+
+**Friction tradeoff, deliberately made**: only Business Name, Owner Name,
+Email, Phone, and Consent are marked `required`. Everything else (address,
+industry, employee count, years in business, all 6 social/profile URLs,
+challenge checkboxes, goals) is optional. A 20+ field mandatory form on a
+*free* top-of-funnel offer would tank completion rate; making the extras
+optional keeps the full data-capture value for people willing to give it
+without blocking a fast submit for people who aren't.
+
+**Consent & liability language**: added a Tennessee-specific disclaimer
+(informational-only audit, no guarantee of results, no client relationship
+created by form submission, liability limited to the extent Tennessee law
+allows). This is boilerplate, not attorney-drafted — GPT's original note
+still stands and applies here too: **have a Tennessee business attorney
+review and expand this before it's load-bearing for anything beyond lead
+qualification** (arbitration/venue clauses, a real service agreement,
+data/privacy language, and electronic signature provisions if you want the
+consent checkbox to carry more legal weight than "the customer clicked a
+box").
+
+**Print fallback**: added a "Print This Form" button (`window.print()`) plus
+`@media print` CSS that hides everything except the form itself and shows a
+signature/date line for a physical signature. Satisfies "if they want a hard
+copy they can print it" without maintaining a separate PDF file — one source
+of truth (the HTML form) instead of two things that can drift out of sync.
+
+**Submission**: still `mailto:`-based, extended to include all new fields
+(checkbox selections joined with commas, sectioned plain-text body). No new
+backend, no new account.
+
+**Not done in this pass, deliberately**: the other five forms GPT scoped
+(GBP intake, website build intake, Cloudflare/domain handoff, managed
+services agreement, change request form) were not built. Per the company's
+own sequencing rule — customers before infrastructure — those forms don't
+earn their build time until there's a client past the audit stage who
+actually needs one. Build them when the first real prospect reaches that
+stage, not preemptively.
+
+**Logo asset — decision made**: keep the animated SVG lotus mark on the live
+site (no change). The PNG logo (lotus mark + "Lotus Intelligence LLC — Smart
+Solutions. Real Results." wordmark) is reserved for client-facing documents
+generated per real job — audit reports, quotes, onboarding paperwork — not
+for the website. When those document templates get built, use the PNG there.
+
+---
+
 ## Open items / things not to re-litigate without new info
 
 - Pricing stays "Custom Quote" until there's real client data. Don't add

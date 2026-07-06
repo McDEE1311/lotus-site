@@ -259,8 +259,38 @@
   .tl-col li{padding:8px 0; border-bottom:1px solid rgba(180,190,230,0.08);}
 
   /* ============ CONTACT ============ */
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px;}
-  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-grid{display:grid; grid-template-columns:1fr; gap:48px;}
+  .audit-form fieldset{border:none; padding:0; margin:0 0 30px 0;}
+  .audit-form legend{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:16px; padding:0; width:100%; border-bottom:1px solid rgba(180,190,230,0.14); padding-bottom:8px;
+  }
+  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 20px;}
+  @media (max-width:600px){ .field-grid{grid-template-columns:1fr;} }
+  .field .optional{color:var(--fog-dim); font-weight:400; text-transform:none; letter-spacing:0; font-family:var(--body);}
+  .check-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px 20px; margin-bottom:8px;}
+  @media (max-width:600px){ .check-grid{grid-template-columns:1fr;} }
+  .check-item{display:flex; align-items:center; gap:10px; font-size:14px; color:var(--fog);}
+  .check-item input{width:16px; height:16px; accent-color:var(--cyan); flex-shrink:0;}
+  .consent-box{border:var(--edge); background:var(--navy-panel); padding:18px 20px; margin-bottom:8px;}
+  .consent-box label{display:flex; gap:12px; align-items:flex-start; font-size:14px; color:var(--fog); cursor:pointer;}
+  .consent-box input{width:17px; height:17px; margin-top:2px; accent-color:var(--cyan); flex-shrink:0;}
+  .fine-print{font-size:11.5px; line-height:1.6; color:var(--fog-dim); margin-top:16px; padding-top:16px; border-top:1px solid rgba(180,190,230,0.1);}
+  .form-actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:8px;}
+  .print-signature{display:none;}
+
+  @media print{
+    header, .backdrop, .hero, #about, #services, #why, #lotie, #vision, footer, .btn-ghost, .scroll-cue{display:none !important;}
+    body{background:#fff !important; color:#000 !important;}
+    #contact{padding:20px 0 !important;}
+    section#contact *{color:#000 !important; background:transparent !important; box-shadow:none !important;}
+    .field input, .field select, .field textarea{border:1px solid #000 !important;}
+    .contact-info{display:none !important;}
+    .form-actions{display:none !important;}
+    .print-signature{display:block !important; margin-top:30px; font-size:13px;}
+    .print-signature .sig-line{display:inline-block; width:260px; border-bottom:1px solid #000; margin:0 10px;}
+  }
+
   .field{margin-bottom:20px;}
   .field label{display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--fog-dim); margin-bottom:8px;}
   .field input, .field textarea, .field select{
@@ -561,43 +591,94 @@
   </div>
 </section>
 
-<!-- ============ CONTACT ============ -->
+<!-- ============ CONTACT / FREE BUSINESS AUDIT ============ -->
 <section id="contact">
   <div class="wrap contact-grid">
     <div class="reveal">
       <div class="section-head" style="margin-bottom:32px;">
-        <div class="eyebrow">Get Started</div>
+        <div class="eyebrow">Get Started &mdash; Free Business Audit</div>
         <h2>Get your free business audit.</h2>
-        <p>Tell us about your business and we'll show you exactly what's working, what's broken, and what's missing — no cost, no obligation.</p>
+        <p>Fill out what you can — only name, email, phone, and consent are required. The more you share, the more specific your audit will be. Prefer paper? Use the <b>Print This Form</b> button and sign by hand.</p>
       </div>
-      <form id="leadForm">
-        <div class="field"><label>Business Name</label><input type="text" name="business" required></div>
-        <div class="field"><label>Contact Name</label><input type="text" name="name" required></div>
-        <div class="field"><label>Phone</label><input type="tel" name="phone" required></div>
-        <div class="field"><label>Email</label><input type="email" name="email" required></div>
-        <div class="field"><label>Website (if you have one)</label><input type="text" name="website"></div>
-        <div class="field"><label>Google Business Profile (if you have one)</label><input type="text" name="gbp"></div>
-        <div class="field">
-          <label>What service are you interested in?</label>
-          <select name="service">
-            <option>Free Business Audit</option>
-            <option>Google Business Profile Management</option>
-            <option>Website Development</option>
-            <option>Social Media Management</option>
-            <option>Business Monitoring</option>
-            <option>Not sure yet</option>
-          </select>
+
+      <form id="leadForm" class="audit-form">
+
+        <fieldset>
+          <legend>Business Information</legend>
+          <div class="field"><label>Business Name *</label><input type="text" name="business" required></div>
+          <div class="field-grid">
+            <div class="field"><label>Owner Name *</label><input type="text" name="owner" required></div>
+            <div class="field"><label>Email *</label><input type="email" name="email" required></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>Phone *</label><input type="tel" name="phone" required></div>
+            <div class="field"><label>Website <span class="optional">(optional)</span></label><input type="text" name="website"></div>
+          </div>
+          <div class="field"><label>Business Address <span class="optional">(optional)</span></label><input type="text" name="address"></div>
+          <div class="field-grid">
+            <div class="field"><label>Industry <span class="optional">(optional)</span></label><input type="text" name="industry" placeholder="e.g. HVAC, Real Estate, Landscaping"></div>
+            <div class="field"><label>Number of Employees <span class="optional">(optional)</span></label><input type="text" name="employees"></div>
+          </div>
+          <div class="field"><label>Years in Business <span class="optional">(optional)</span></label><input type="text" name="years"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Current Online Presence <span class="optional" style="text-transform:none;">(all optional — skip what you don't have)</span></legend>
+          <div class="field-grid">
+            <div class="field"><label>Google Business Profile URL</label><input type="text" name="gbp"></div>
+            <div class="field"><label>Facebook URL</label><input type="text" name="facebook"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>Instagram URL</label><input type="text" name="instagram"></div>
+            <div class="field"><label>LinkedIn URL</label><input type="text" name="linkedin"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>TikTok URL</label><input type="text" name="tiktok"></div>
+            <div class="field"><label>YouTube URL</label><input type="text" name="youtube"></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Current Challenges <span class="optional" style="text-transform:none;">(check all that apply)</span></legend>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" name="challenge" value="Not enough leads">Not enough leads</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Not enough calls">Not enough calls</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Poor Google rankings">Poor Google rankings</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="No website">No website</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Website needs improvement">Website needs improvement</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Social media inactive">Social media inactive</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Reputation management">Reputation management</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Automation needs">Automation needs</label>
+            <label class="check-item"><input type="checkbox" name="challenge" value="Other">Other</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Goals</legend>
+          <div class="field"><label>What would success look like in the next 6 months? <span class="optional">(optional)</span></label><textarea name="goals" rows="3"></textarea></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Consent</legend>
+          <div class="consent-box">
+            <label>
+              <input type="checkbox" name="consent" required>
+              <span>I authorize Lotus Intelligence LLC to review my publicly available online business presence (website, Google Business Profile, and social media accounts) for the purpose of providing a complimentary business audit. Checking this box and submitting this form constitutes my electronic signature. *</span>
+            </label>
+          </div>
+          <p class="fine-print">
+            This audit is provided for informational purposes only and does not constitute professional, legal, financial, or marketing advice, and no guarantee of results is made or implied. Lotus Intelligence LLC, located in Decherd, Tennessee, disclaims liability for any actions taken based on this audit to the fullest extent permitted under Tennessee law. Submission of this form does not create a client relationship or service agreement — a separate written agreement is required before any paid services begin.
+          </p>
+        </fieldset>
+
+        <div class="print-signature">
+          Signature: <span class="sig-line">&nbsp;</span> &nbsp; Date: <span class="sig-line" style="width:120px;">&nbsp;</span>
         </div>
-        <div class="field"><label>What's your biggest challenge right now?</label><textarea name="challenges" rows="3"></textarea></div>
-        <div class="field">
-          <label>Preferred contact method</label>
-          <select name="contactMethod">
-            <option>Phone</option>
-            <option>Email</option>
-            <option>Text</option>
-          </select>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Submit Audit Request →</button>
+          <button class="btn btn-ghost" type="button" onclick="window.print()">Print This Form</button>
         </div>
-        <button class="btn btn-primary" type="submit">Send Message →</button>
         <p class="field-note mono" style="margin-top:16px; font-size:11px; color:var(--emerald);"></p>
       </form>
     </div>
@@ -647,18 +728,35 @@
     e.preventDefault();
     var f = e.target;
     var data = new FormData(f);
+    var challenges = data.getAll('challenge').join(', ') || 'n/a';
     var lines = [
+      '--- BUSINESS INFORMATION ---',
       'Business Name: ' + data.get('business'),
-      'Contact Name: ' + data.get('name'),
-      'Phone: ' + data.get('phone'),
+      'Owner Name: ' + data.get('owner'),
       'Email: ' + data.get('email'),
+      'Phone: ' + data.get('phone'),
       'Website: ' + (data.get('website') || 'n/a'),
+      'Business Address: ' + (data.get('address') || 'n/a'),
+      'Industry: ' + (data.get('industry') || 'n/a'),
+      'Number of Employees: ' + (data.get('employees') || 'n/a'),
+      'Years in Business: ' + (data.get('years') || 'n/a'),
+      '',
+      '--- CURRENT ONLINE PRESENCE ---',
       'Google Business Profile: ' + (data.get('gbp') || 'n/a'),
-      'Service Interested In: ' + data.get('service'),
-      'Biggest Challenge: ' + (data.get('challenges') || 'n/a'),
-      'Preferred Contact Method: ' + data.get('contactMethod')
+      'Facebook: ' + (data.get('facebook') || 'n/a'),
+      'Instagram: ' + (data.get('instagram') || 'n/a'),
+      'LinkedIn: ' + (data.get('linkedin') || 'n/a'),
+      'TikTok: ' + (data.get('tiktok') || 'n/a'),
+      'YouTube: ' + (data.get('youtube') || 'n/a'),
+      '',
+      '--- CHALLENGES & GOALS ---',
+      'Current Challenges: ' + challenges,
+      '6-Month Goals: ' + (data.get('goals') || 'n/a'),
+      '',
+      '--- CONSENT ---',
+      'Consent given (electronic signature): ' + (data.get('consent') ? 'YES' : 'NO')
     ];
-    var subject = 'New Lead: ' + (data.get('business') || data.get('name'));
+    var subject = 'Free Business Audit Request: ' + (data.get('business') || data.get('owner'));
     var body = lines.join('\n');
     var mailto = 'mailto:info@lotusintell.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     window.location.href = mailto;
