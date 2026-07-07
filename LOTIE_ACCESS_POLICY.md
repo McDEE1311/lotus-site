@@ -91,3 +91,30 @@ needed and describe what she'd recommend; a human decides and acts.
    revisit whether task-tracking needs the approval-runner extension. Don't
    build that automation preemptively — Rule #4: automate proven processes,
    not hypothetical ones.
+
+---
+
+## Known Behavior Notes (found during initial verification, 2026-07-06)
+
+**Phrase requests as explicit search instructions, not open questions.**
+Asking a plain conversational question ("What's Lotus Intelligence's
+pricing policy?") returned "I don't have this information" twice in a row,
+even after the knowledge base was correctly indexed and verified via direct
+CLI search (`openclaw memory search "pricing policy" --agent main` returned
+accurate results). Rephrasing as an explicit instruction ("Search your
+memory for Lotus Intelligence pricing policy...") worked correctly both
+times it was tried. Until this is better understood, assume conversational
+questions may not reliably trigger tool use — lead with "search your memory
+for X" when you need her to actually check the knowledge base.
+
+**Semantic search is unreliable for "what's currently in this folder"
+questions.** When asked what was in the AUDITS folder, she reported it as
+empty despite the one real (test) entry being indexed and part of the file
+count. Likely cause: vector similarity search matches conceptually similar
+content, not literal directory listings — a folder's README describing the
+*template* for entries can outscore the one real entry for a query like
+"folder contents." For questions about current file/record counts, verify
+with a direct `ls` on the actual path rather than trusting her semantic
+recall. This is the same caution already documented in her taorig1
+handoff about self-reported "current state" claims — same failure mode,
+new location.
