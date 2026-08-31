@@ -176,6 +176,20 @@
   .section-head h2{font-size:clamp(30px,4vw,42px); margin-bottom:16px;}
   .section-head p{color:var(--fog-dim); font-size:16px;}
 
+  /* ============ HARMONY CALLOUT ============ */
+  .harmony-callout{padding:80px 0; background:var(--navy-panel); border-top:var(--edge); border-bottom:var(--edge);}
+  @media (max-width:720px){ .harmony-callout{padding:56px 0;} }
+  .harmony-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  @media (max-width:860px){ .harmony-grid{grid-template-columns:1fr;} }
+  .harmony-copy h2{font-size:clamp(26px,3.6vw,36px); margin-bottom:10px;}
+  .harmony-tag{font-family:var(--display); font-size:17px; color:var(--cyan); margin-bottom:16px;}
+  .harmony-copy p.lead{font-size:16px; color:var(--fog); max-width:480px; margin-bottom:26px;}
+  .harmony-chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--fog); border:1px solid rgba(180,190,230,0.22); padding:8px 14px;
+  }
+
   /* ============ ABOUT ============ */
   .about-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center;}
   @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
@@ -412,6 +426,28 @@
     </div>
   </div>
   <div class="scroll-cue"><span></span>SCROLL</div>
+</section>
+
+<!-- ============ HARMONY CALLOUT ============ -->
+<section class="harmony-callout">
+  <div class="wrap harmony-grid">
+    <div class="harmony-copy reveal">
+      <div class="eyebrow">Now Available</div>
+      <h2>Harmony Hub</h2>
+      <div class="harmony-tag">Your household, on the same page.</div>
+      <p class="lead">Groceries, meals, schedules, chores and reminders — one shared place your whole household can actually use. Type it the way you'd say it, Harmony sorts it out.</p>
+      <a href="/harmony" class="btn btn-primary">Explore Harmony →</a>
+    </div>
+    <div class="harmony-chips reveal">
+      <span class="chip">Groceries</span>
+      <span class="chip">Meals</span>
+      <span class="chip">Schedules</span>
+      <span class="chip">Chores</span>
+      <span class="chip">Reminders</span>
+      <span class="chip">Up to 12 members</span>
+      <span class="chip">No ads</span>
+    </div>
+  </div>
 </section>
 
 <!-- ============ ABOUT ============ -->
