@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Harmony Hub — Your Household, On the Same Page | Lotus Intelligence</title>
-<meta name="description" content="Groceries, meals, schedules, chores and reminders — one shared place your whole household can actually use. Type it the way you'd say it. Founding pricing: $25 first year or $5.99/month, up to 12 household members. Works on iPhone and Android.">
+<meta name="description" content="Groceries, meals, schedules, chores and reminders — one shared place your whole household can actually use. Type it the way you'd say it. Founding pricing: $25/year or $5.99/month, up to 12 household members. Works on iPhone and Android.">
 <meta name="theme-color" content="#0A0E1A">
 <link rel="canonical" href="https://lotusintell.com/harmony">
 
@@ -188,10 +188,10 @@
         One shared place your whole household can actually use.
       </p>
       <div class="btns">
-        <a class="btn js-cta-register" href="https://app.lotusintell.com/register">Start Free</a>
+        <a class="btn" href="https://app.lotusintell.com/register">Start Free Trial</a>
         <a class="btn alt" href="#how">See how it works</a>
       </div>
-      <p class="fineline">Early access is free right now · No ads · We do not sell household data</p>
+      <p class="fineline">7 days free · Card required to start your trial · No ads · We do not sell household data</p>
     </div>
 
     <div class="phone" aria-hidden="true">
@@ -266,26 +266,28 @@
 
 <section id="pricing">
   <div class="wrap">
-    <h2>Founding Family — $25 for the first year</h2>
+    <h2>Founding Family — $25/year</h2>
     <p class="sec-lede">
-      Harmony Hub is still in free early access while we finish the paid launch.
-      When billing opens, new public signups will receive a 7-day free trial.
-      The first 10,000 qualifying Founding Family households can get their first
-      year for $25.
+      New households start with a 7-day free trial — a card is required to
+      start, and you won't be charged if you cancel before the trial ends.
+      The first 10,000 qualifying Founding Family households get this rate.
     </p>
 
     <div class="price-wrap">
       <div class="price hi">
         <span class="tag">Best value</span>
-        <div class="amt">$25<small> for the first year</small></div>
+        <div class="amt">$25<small> / year</small></div>
         <p style="color:var(--muted);margin:8px 0 0;font-size:14.5px">
           One household. Up to 12 household members included.</p>
         <ul>
-          <li>7-day free trial when public billing opens</li>
+          <li>7-day free trial, card required to start</li>
           <li>Up to 12 household members at no extra charge</li>
           <li>Calendar, chores, groceries, meals and reminders</li>
           <li>First 10,000 qualifying founding annual households</li>
         </ul>
+        <p class="fineline" style="margin:14px 0 0">
+          7 days free, then $25/year. Renews annually at $25 unless canceled.
+        </p>
       </div>
 
       <div class="price">
@@ -293,6 +295,7 @@
         <p style="color:var(--muted);margin:8px 0 0;font-size:14.5px">
           Monthly option for households that prefer not to pay annually.</p>
         <ul>
+          <li>7-day free trial, card required to start</li>
           <li>Up to 12 household members included</li>
           <li>No per-member or seat charges</li>
           <li>Cancel anytime</li>
@@ -301,11 +304,15 @@
     </div>
 
     <p class="fineline" style="margin-top:20px">
-      Early access is currently free and does not require a card. Paid trial checkout is not live yet.
+      Card required to start your trial. Cancel before it ends and you won't
+      be charged — cancel anytime after that from your account.
+    </p>
+    <p class="fineline">
+      Existing lifetime-access households keep their access. Sign in below.
     </p>
 
     <div class="btns" style="margin-top:28px">
-      <a class="btn js-cta-register" href="https://app.lotusintell.com/register">Start Free</a>
+      <a class="btn" href="https://app.lotusintell.com/register">Start Free Trial</a>
       <a class="btn alt" href="https://app.lotusintell.com/login">Sign in</a>
     </div>
   </div>
@@ -350,22 +357,7 @@
 }
 </script>
 
-<script>
-  // Preserve an allowlisted set of UTM params through to the signup link,
-  // so social/QR/ad traffic keeps its attribution across the click.
-  (function(){
-    var allow = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
-    var params = new URLSearchParams(window.location.search);
-    var kept = new URLSearchParams();
-    allow.forEach(function(k){ if(params.has(k)) kept.set(k, params.get(k)); });
-    var qs = kept.toString();
-    if(!qs) return;
-    document.querySelectorAll('a.js-cta-register').forEach(function(a){
-      var sep = a.href.indexOf('?') > -1 ? '&' : '?';
-      a.href = a.href + sep + qs;
-    });
-  })();
-</script>
+<script src="/assets/utm-forward.js" defer></script>
 
 </body>
 </html>
