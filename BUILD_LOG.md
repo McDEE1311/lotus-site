@@ -248,6 +248,32 @@ copy refinement). Merged and confirmed live.
 
 ---
 
+## 2026-09-19 — /harmony: demo label fix + second post-video CTA
+
+Two small corrections after visual review of the live page (PR #4):
+
+- "See it in 20 seconds" corrected to "Watch the 15-second demo" — the
+  embedded video is 15.2 seconds (`ffprobe`-confirmed both times this page
+  has been touched), not 20.
+- Added a second "Start Free 7-Day Trial" button plus the same trial/
+  pricing disclosure line directly below the video, so a visitor doesn't
+  have to scroll back to the top after watching the demo to convert. Uses
+  the same register URL as the top button, so it's automatically covered by
+  the existing UTM-forwarding script (matches by href prefix, not by a
+  specific element) — no new wiring needed for campaign-parameter
+  preservation.
+
+Verified on the Cloudflare preview and again on production after merge:
+both buttons present and pointing at the correct register URL, pricing
+disclosure appears correctly on both, UTM params forward from both, member-
+cap and lifetime-access lines unaffected, logo/video re-extracted from
+production and confirmed byte-identical to the file originally supplied for
+PR #4 (still untouched by any of these copy edits).
+
+Shipped as PR #5. Merged and confirmed live.
+
+---
+
 ## Open items / things not to re-litigate without new info
 
 - Pricing stays "Custom Quote" until there's real client data. Don't add
