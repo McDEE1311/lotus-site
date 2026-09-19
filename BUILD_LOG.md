@@ -169,6 +169,36 @@ ready to test end-to-end.
 
 ---
 
+## 2026-09-16 — Harmony Hub pricing/trial copy corrected for ad launch
+
+Standardized across `/harmony`, `/products/harmony-hub`, `/products/`:
+"7 days free, then $25/year. Renews annually at $25 unless canceled."
+Monthly stays $5.99/month. Removed all "for the first year" / lifetime-lock
+language — the annual price is the ongoing recurring price, not a
+first-year-only rate. Added "Existing lifetime-access households keep their
+access. Sign in below." reassurance line on both Harmony pages.
+
+This replaced earlier "free early access / no card / checkout not live yet"
+copy that had gone stale relative to the app: `harmony-hub-core` (read-only
+review, no edits made there) already runs a real, unconditional Stripe
+checkout after registration for any non-comp household — both plans get the
+same 7-day trial, and the 10,000-household founding cap is a real enforced
+count, not just marketing copy. Existing lifetime-free (`beta_comp`)
+households and the access-code exemption mechanism were untouched.
+
+**Stripe Price object confirmed directly by CJ** (its actual recurring
+configuration lives outside this repo's visibility — nothing in
+`billing.py`/`entitlements.py` schedules a price change after checkout, but
+that's as far as the code alone can confirm; the $25/year-with-no-scheduled-
+increase claim rests on his direct confirmation, not on independent
+verification from this repo).
+
+Shipped as PR #2 (main copy correction) + PR #3 (a missed nav CTA on
+`products/harmony-hub.html` still reading "Start free", caught in post-merge
+live verification). Both merged and confirmed live on production.
+
+---
+
 ## Open items / things not to re-litigate without new info
 
 - Pricing stays "Custom Quote" until there's real client data. Don't add
@@ -183,3 +213,7 @@ ready to test end-to-end.
 - Contact form is Formspree-based (v8) — don't revert to `mailto:`. That was
   tried, tested on a real machine, and failed silently because it depends on
   the visitor having a desktop mail client configured. Don't re-introduce it.
+- Harmony Hub's founding annual price is $25/year as the *ongoing* recurring
+  price, not a first-year-only teaser — confirmed by CJ directly against the
+  Stripe Price object (2026-09-16). Don't revert to "$25 for the first year"
+  or add year-two-increase language without new info from him.
