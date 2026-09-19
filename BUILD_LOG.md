@@ -199,6 +199,55 @@ live verification). Both merged and confirmed live on production.
 
 ---
 
+## 2026-09-19 — /harmony replaced with ad-matched landing page (v2 creative)
+
+Replaced the `/harmony` page with a new single-CTA landing page matching the
+paid-ad creative: hero copy, a 15-second self-contained demo video, and one
+primary action, deliberately with no competing button or nav. Both the logo
+and demo video are embedded as base64 data URIs — no external asset
+dependency, nothing to break if a CDN or image host goes down.
+
+**The file as originally supplied was not launch-safe.** Its only
+call-to-action was `href="#"` — a dead link; the string "register" did not
+appear anywhere in the file, so no visitor could have actually reached
+signup. It also had zero `<script>` tags, meaning no UTM/campaign-attribution
+forwarding on the exact page paid ad traffic lands on first, and it was
+missing meta description, canonical link, and OG/Twitter tags entirely.
+Fixed before anything went live: CTA now points to
+`https://app.lotusintell.com/register`, the shared UTM-forwarding script is
+included, and canonical/OG/Twitter tags were added (reusing the existing
+`harmony-hub-og.png` asset rather than inventing a new one).
+
+**Follow-up refinement pass**, same day:
+- Button text on the teal CTA changed from white to dark (`var(--bg)`) —
+  measured contrast ratio was 1.8:1 (a real WCAG failure) before, 10.24:1
+  after.
+- CTA-adjacent copy standardized to: "7 days free, then $25/year. Renews
+  annually at $25 unless canceled. Card required to start your trial."
+- Added "One household. Up to 12 members." — this page hadn't stated the
+  member cap anywhere, unlike every other Harmony page on the site.
+- Removed a quoted testimonial that was never separately confirmed as an
+  actual statement (see Open Items below) — the household and video footage
+  behind it are verified genuine (a pulled video frame shows real app UI
+  under the household name "MCDONALD'S HOUSE," using the same family names,
+  Lotus and CJ, that appear in phone-mock demos elsewhere on the site), but
+  the quoted sentence itself wasn't, so it came out.
+- Lifetime-access line, register link, UTM forwarding, and canonical/OG tags
+  from the first pass were preserved and re-verified.
+
+**Verification before and after merge**: hash of the received file matched
+independently; logo confirmed as a valid PNG; video confirmed as a valid
+1080×1920 H.264 MP4, re-extracted and byte-for-byte identical on production
+to what was originally supplied (untouched by the copy edits around it);
+mobile layout checked via CSS (single-column by design, no fixed widths that
+would overflow); all copy, links, and tags confirmed live on production
+after merge.
+
+Shipped as PR #4 (three commits: as-received, dead-link/attribution fixes,
+copy refinement). Merged and confirmed live.
+
+---
+
 ## Open items / things not to re-litigate without new info
 
 - Pricing stays "Custom Quote" until there's real client data. Don't add
@@ -217,3 +266,7 @@ live verification). Both merged and confirmed live on production.
   price, not a first-year-only teaser — confirmed by CJ directly against the
   Stripe Price object (2026-09-16). Don't revert to "$25 for the first year"
   or add year-two-increase language without new info from him.
+- The `/harmony` testimonial quote was deliberately removed (2026-09-19) —
+  the household and demo video are verified real, but the exact quoted
+  sentence was never separately confirmed as actually said. Don't add a
+  testimonial back without that confirmation, whoever writes it.
