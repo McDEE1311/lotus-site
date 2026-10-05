@@ -58,6 +58,26 @@
     .nav-in .cta:not(.links .cta){display:none}
   }
 
+  .mobile-bundle{display:none}
+  .bundle-cta{background:rgba(124,92,255,.18);flex-shrink:0}
+  .product + .product{margin-top:24px}
+  .bundle-product{grid-template-columns:1fr}
+  .audit{margin-top:22px;border-top:1px solid var(--edge);padding-top:18px}
+  .audit summary{cursor:pointer;color:var(--cyan);font-weight:600}
+  .audit label{display:block;margin:12px 0 8px}
+  .audit textarea{width:100%;min-height:170px;padding:14px;background:var(--ink);color:var(--text);border:1px solid var(--edge);border-radius:8px;font:14px/1.6 system-ui}
+  .audit p{font-size:14px;color:var(--muted)}
+  .audit button{cursor:pointer;font-family:inherit}
+  .audit-status{min-height:1.6em}
+  @media(max-width:1050px){
+    .links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;background:var(--ink2);padding:12px 24px}
+    .links.open{display:flex}
+    .links a{padding:12px;width:100%}
+    .burger{display:block}
+    .nav-in > .cta{display:none}
+    .links .mobile-bundle{display:block}
+  }
+
   /* ── hero ── */
   header{padding:70px 0 52px;position:relative;overflow:hidden}
   header::before{content:"";position:absolute;inset:-150px 0 auto;height:480px;pointer-events:none;
@@ -172,8 +192,9 @@
       <a href="/#vision">Vision</a>
       <a href="/#contact">Contact</a>
       <a class="cta js-utm-forward" href="/products/harmony-hub">Try Harmony Hub</a>
+      <a class="cta mobile-bundle" href="https://www.etsy.com/listing/4588074196/small-business-operations-bundle-lead">Business Bundle on Etsy</a>
     </div>
-    <a class="cta js-utm-forward" href="/products/harmony-hub">Try Harmony Hub</a>
+    <a class="cta bundle-cta" href="https://www.etsy.com/listing/4588074196/small-business-operations-bundle-lead">Business Bundle</a>
   </div>
 </nav>
 
@@ -192,7 +213,7 @@
 <section>
   <div class="wrap">
     <p class="sec-label">Available now</p>
-    <article class="product"><div class="p-body"><h2 class="p-name">Small Business Operations Bundle</h2><p class="p-desc">Four downloadable tools for lead research, daily operations, review responses and emergency handoff. Customize your own working copies. No subscription to the kit.</p><div class="btns"><a class="btn" href="/products/business-kit">See the tools & workflow</a></div></div></article>
+    <article class="product bundle-product"><div class="p-body"><h2 class="p-name">Small Business Operations Bundle</h2><p class="p-desc">Four downloadable tools for lead research, daily operations, review responses and emergency handoff. Customize your own working copies. No subscription to the kit.</p><div class="btns"><a class="btn" href="/products/business-kit">See the tools & workflow</a><a class="btn alt" href="https://www.etsy.com/listing/4588074196/small-business-operations-bundle-lead">View bundle on Etsy</a></div><details class="audit"><summary>Compare the Business Bundle with Gemini</summary><p>Copy this question, open Gemini and paste it. Gemini is a separate service; its answers may be incorrect. This is a request for an independent comparison, not an endorsement.</p><label for="bundle-audit">Comparison question</label><textarea id="bundle-audit" readonly>Review https://lotusintell.com/products/business-kit and compare this product with two relevant alternatives for its intended audience. Use current official product pages where possible and cite your sources. Compare features, total price, software requirements, setup effort, customization, collaboration and limitations. Distinguish verified facts from claims you cannot confirm. Explain who should buy it, who should skip it, and what questions remain. Do not assume access to private app features or paid download contents. Do not treat marketing statements as proof of results.</textarea><div class="btns"><button class="btn alt" type="button" data-copy="bundle-audit">Copy comparison question</button><a class="btn alt" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Open Gemini ↗</a></div><p class="audit-status" role="status"></p></details></div></article>
 
     <article class="product">
       <div class="p-body">
@@ -233,7 +254,7 @@
         <p class="note">
           7-day free trial, card required · Founding Family $25/year (renews annually) ·
           Monthly option $5.99 · First 10,000 founding annual households
-        </p>
+        </p><details class="audit"><summary>Compare Harmony Hub with Gemini</summary><p>Copy this question, open Gemini and paste it. Gemini is a separate service; its answers may be incorrect. This is a request for an independent comparison, not an endorsement.</p><label for="harmony-audit">Comparison question</label><textarea id="harmony-audit" readonly>Review https://lotusintell.com/products/harmony-hub and compare this product with two relevant alternatives for its intended audience. Use current official product pages where possible and cite your sources. Compare features, total price, software requirements, setup effort, customization, collaboration and limitations. Distinguish verified facts from claims you cannot confirm. Explain who should buy it, who should skip it, and what questions remain. Do not assume access to private app features or paid download contents. Do not treat marketing statements as proof of results.</textarea><div class="btns"><button class="btn alt" type="button" data-copy="harmony-audit">Copy comparison question</button><a class="btn alt" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Open Gemini ↗</a></div><p class="audit-status" role="status"></p></details>
       </div>
 
       <div class="p-side">
@@ -315,6 +336,19 @@
   b.addEventListener("click", () => {
     const open = l.classList.toggle("open");
     b.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.querySelectorAll('[data-copy]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const field = document.getElementById(button.dataset.copy);
+      const status = button.closest('.audit').querySelector('.audit-status');
+      try {
+        await navigator.clipboard.writeText(field.value);
+        status.textContent = 'Copied. Open Gemini and paste the question.';
+      } catch {
+        field.focus(); field.select();
+        status.textContent = 'Question selected. Copy it manually, then paste into Gemini.';
+      }
+    });
   });
 </script>
 <script src="/assets/utm-forward.js" defer></script>
