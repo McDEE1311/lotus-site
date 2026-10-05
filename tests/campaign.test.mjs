@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {campaignLink,metrics,validRow} from '../assets/campaign-core.mjs';
+test('campaign links keep content as data, with a fixed buyer destination',()=>{const u=new URL(campaignLink('facebook','demo&redirect=https://evil.example'));assert.equal(u.hostname,'lotusintell.com');assert.equal(u.pathname,'/products/business-kit');assert.equal(u.searchParams.get('utm_content'),'demo&redirect=https://evil.example');});
+test('empty metrics do not manufacture conversion or acquisition cost',()=>{assert.equal(metrics([]).cac,null);assert.equal(metrics([]).ctr,null);});
+test('aggregate spend per confirmed order',()=>{assert.equal(metrics([{views:100,clicks:4,orders:2,revenue:12,spend:5}]).cac,2.5);});
+test('backup rejects negative numbers, unknown sources and missing fields',()=>{const row={id:'fb-01',source:'facebook',hook:'Hello',status:'posted',views:1,clicks:0,orders:0,revenue:0,spend:0,evidence:''};assert.ok(validRow(row));assert.equal(validRow({...row,spend:-1}),false);assert.equal(validRow({...row,source:'other'}),false);assert.equal(validRow({}),false);});

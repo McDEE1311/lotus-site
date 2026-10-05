@@ -274,6 +274,22 @@ Shipped as PR #5. Merged and confirmed live.
 
 ---
 
+## 2026-10-05 — Business kit buyer page and campaign studio
+
+Added `/products/business-kit` with four-tool positioning, an explicitly
+illustrative lead workflow, file/software limitations and Etsy purchase links.
+Added a product-directory link and `/campaigns/`, a browser-local owner tool
+for tagged links, post tests, manually reported metrics and JSON backup/restore.
+Six demo hooks are included. No fabricated testimonials, income claims or
+automatic sales attribution. No tracking backend, social posting, prices,
+ad settings, service offerings or Harmony pages changed.
+
+The studio is public code with local records, not a private connected dashboard.
+UTMs are preserved through Etsy links but do not prove purchases. Documented
+this distinction and the deployment workflow in CAMPAIGN_GUIDE.md.
+Core tests cover fixed destinations, empty metrics, acquisition cost and backup
+validation. Production publication requires review and merge of the branch.
+
 ## Open items / things not to re-litigate without new info
 
 - Pricing stays "Custom Quote" until there's real client data. Don't add
