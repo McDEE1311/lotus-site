@@ -6,17 +6,18 @@ Public marketing website for **Lotus Intelligence LLC** — a single self-contai
 
 ## What this is
 
-One file: `index.html`. All CSS and JS are inline. No npm install, no build process. You can open it directly in a browser to preview, or drop it straight into a static host.
+Static HTML, no build step. Homepage `index.html` and `partners/index.html` share `assets/site.css` and `assets/site.js` (since the 2026-11 redesign). Other pages keep their own inline styles. Preview with any static server that maps `/harmony` → `harmony.html` (Cloudflare Pages does this automatically).
 
 ## Sections
 
-Hero → About → Services → Why Lotus Intelligence → LotiE AI → Future Vision (Coming Soon roadmap) → Contact (lead intake form)
+Hero → Connected business (scroll-driven) → Services → Available / Pilot / In development → Products (Harmony Hub, Etsy) → LotiE → About → Partner band → Contact (audit form) → Footer. Separate `/partners/` page.
 
 ## Tech notes
 
 - Fonts: Chakra Petch (headings), Inter (body), IBM Plex Mono (labels/data) — loaded via Google Fonts.
 - All brand artwork (the lotus mark) is hand-built inline SVG, reused via `<symbol>`/`<use>` — no external image assets, no licensing risk.
-- Contact form submits via `mailto:` construction in JS (see `#leadForm` handler at bottom of file) — zero backend, zero third-party account required. Opens the visitor's mail client with the lead data pre-filled, addressed to `info@lotusintell.com`.
+- Contact form submits to Formspree (`https://formspree.io/f/mqevnjey`) via fetch in `assets/site.js`; falls back to a native POST with JS off. Do not revert to `mailto:` (see BUILD_LOG).
+- Official links: Etsy https://www.etsy.com/shop/LotusIntellTools · Facebook https://www.facebook.com/profile.php?id=61593342792239
 - Fully responsive — grid layouts collapse at 900px/860px/720px/600px/520px breakpoints.
 - Respects `prefers-reduced-motion`.
 

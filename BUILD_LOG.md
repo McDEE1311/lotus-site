@@ -290,6 +290,72 @@ this distinction and the deployment workflow in CAMPAIGN_GUIDE.md.
 Core tests cover fixed destinations, empty metrics, acquisition cost and backup
 validation. Production publication requires review and merge of the branch.
 
+## 2026-11-04 — "Local businesses. Connected intelligence." homepage redesign + /partners/
+
+Branch `redesign/connected-intelligence`. Preview-first: merge only after
+review on the Cloudflare Pages branch preview.
+
+**Kept exactly:** Formspree endpoint (`mqevnjey`), every form field name,
+the four required fields + required consent checkbox, consent text, fine
+print, print-this-form fallback, success/error messages, native POST when
+JS is off. `/harmony` link + `js-utm-forward` class, `utm-forward.js`,
+Owner Login (`portal.lotusintell.com/app/owner`), `/products/` link. Old
+anchors `#about #services #why #lotie #vision #contact` still resolve, so
+links from `/products/` keep working. No analytics script existed on `/`,
+none added.
+
+**Changed:**
+- `index.html` rebuilt; styles/behavior moved to `assets/site.css` and
+  `assets/site.js` (shared with `/partners/`). Other pages untouched.
+- Hero uses CJ-supplied conceptual town illustration (`assets/hero-town.*`,
+  webp + jpg fallback). Artwork is a static layer; all text is HTML.
+  Labeled "Illustration" on-page and in the footer.
+- New scroll-driven "Your business, better connected." section: SVG hub +
+  three example nodes (trades, storefront, office) + monitoring ring.
+  IntersectionObserver triggers once per step; spark travel uses one
+  self-terminating rAF loop (~1.1s), nothing animates continuously or
+  offscreen. Mobile: vertical line with nodes beside each step. Reduced
+  motion / no JS: everything shown complete. Labeled as examples, not clients.
+- Three-area structure: Available services / Operating compute pilot (Lium,
+  RTX 3090) / In development (AI assistants, workflow automation, expanded
+  hosting — not for sale).
+- Removed outcome claims: "ranking improvements", "More Calls / More
+  Leads", "results you can measure", "nothing gets missed". Old Vision
+  roadmap retired (listed AI Receptionist etc. as "Coming Soon").
+- LotiE section cut to what LOTIE_ACCESS_POLICY.md + privacy.html support:
+  drafts for human review, searches internal docs, flags follow-ups,
+  publishes approved posts to the Facebook Page. Stated as internal, not a
+  client product.
+- Products section: Harmony Hub (existing link) + "Visit Our Etsy Shop".
+  Official links added: Etsy shop (nav "Shop", Products, footer) and
+  Facebook (contact card "Follow Lotus on Facebook", footer). New-tab links
+  use `rel="noopener noreferrer"` + screen-reader "(opens in a new tab)".
+- New `/partners/`: equipment vs usable capacity (1× RTX 3090 = existing
+  Lium pilot; 8× RTX 3060 owned, need host systems), verified-evidence table
+  with every figure **"Pending verification"** (no numbers invented),
+  next-stage needs, 12-month plan as milestones, securities/no-guarantee
+  disclaimer. CTA is mailto `info@` with subject "Partnership inquiry".
+
+**Before merge — CJ to verify:**
+1. 8× RTX 3060 count (older notes said two 3060s).
+2. Fill the evidence table only with dated figures checked against Lium /
+   power / purchase records.
+3. Review the 12-month milestone wording (drafted, not CJ-authored).
+4. LotiE "Flagging" + "Approved publishing" claims still match reality.
+
+Tested locally (headless Chrome via Playwright, clean-URL static server):
+desktop 1440/1100/1920 + mobile 390 layouts, no horizontal overflow,
+nav collapse at 1120px (checked 1100/1119/1121/1160: no label wrapping),
+nav + mobile menu (aria-expanded, Esc closes), keyboard tab order with
+visible focus, all internal links 200, all anchors present, external links
+rel attrs, UTM forwarding onto `/harmony`, reduced motion, JS disabled,
+form: empty and no-consent submits blocked (0 requests), mocked 200
+success (resets, success message), mocked 500 + network failure (error
+message, values kept), payload fields. Repo tests 4/4. Not tested: live
+Formspree delivery, real Safari/Firefox, Cloudflare Pages build.
+
+---
+
 ## Open items / things not to re-litigate without new info
 
 - Pricing stays "Custom Quote" until there's real client data. Don't add
