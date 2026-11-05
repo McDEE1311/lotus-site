@@ -102,7 +102,7 @@
         })
         .catch(function () {
           note.className = 'field-note is-err';
-          note.textContent = "That didn't go through — please call or text 931-308-8967, or email info@lotusintell.com directly.";
+          note.textContent = "That didn't go through — please email info@lotusintell.com directly.";
         })
         .then(function () { if (btn) btn.disabled = false; });
     });
