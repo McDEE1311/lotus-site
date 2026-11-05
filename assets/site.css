@@ -329,3 +329,24 @@ tbody tr:last-child th, tbody tr:last-child td{border-bottom:0;}
   .print-signature{display:block !important; margin-top:30px; font-size:13px;}
   .print-signature .sig-line{display:inline-block; width:260px; border-bottom:1px solid #000; margin:0 10px;}
 }
+
+/* Pilot highlights: decorative motion with a readable static fallback. */
+.pilot-banner{display:flex;align-items:center;gap:16px;padding:10px 20px;background:linear-gradient(100deg,#142246,#21153f);border-bottom:1px solid var(--cyan-soft);color:var(--white);font-size:14px;}
+.pilot-banner-window{min-width:0;flex:1;overflow:hidden;}
+.pilot-banner-track{display:flex;width:max-content;animation:pilot-scroll 48s linear infinite;}
+.pilot-banner-track p{flex:none;max-width:none;white-space:nowrap;padding-right:64px;}
+.pilot-banner-track strong{color:#67e8f9;}
+.pilot-details,.banner-pause{flex:none;color:var(--white);font:600 13px var(--body);}
+.pilot-details{padding:12px 0;text-underline-offset:4px;}
+.banner-pause{background:var(--panel);border:1px solid var(--line-2);border-radius:6px;min-height:44px;padding:8px 12px;cursor:pointer;}
+.pilot-banner:hover .pilot-banner-track,.pilot-banner:focus-within .pilot-banner-track,.pilot-banner.is-paused .pilot-banner-track{animation-play-state:paused;}
+.field select{width:100%;min-height:48px;background:var(--panel);color:var(--white);border:1px solid var(--line-2);border-radius:8px;padding:12px 14px;font:16px var(--body);}
+.partner-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;}
+#partnerForm button:disabled{opacity:.65;cursor:wait;}
+@keyframes pilot-scroll{to{transform:translateX(-50%);}}
+.no-js .pilot-banner-track{animation:none;width:auto;}
+.no-js .pilot-banner-track p{white-space:normal;padding:0;}
+.no-js .pilot-banner-track p[aria-hidden]{display:none;}
+@media(max-width:600px){.pilot-banner{gap:10px;padding:8px 12px;flex-wrap:wrap;}.pilot-banner-window{flex-basis:100%;}.pilot-details{margin-right:auto;}}
+@media(prefers-reduced-motion:reduce){.pilot-banner-track{animation:none;width:auto;}.pilot-banner-track p{white-space:normal;padding:0;}.pilot-banner-track p[aria-hidden],.banner-pause{display:none;}}
+@media print{.pilot-banner{display:none!important;}}
