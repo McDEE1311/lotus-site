@@ -108,3 +108,50 @@
     });
   }
 })();
+
+(function () {
+  var banner = document.querySelector('.pilot-banner');
+  if (banner) {
+    var pause = banner.querySelector('.banner-pause');
+    pause.hidden = false;
+    pause.addEventListener('click', function () {
+      var paused = banner.classList.toggle('is-paused');
+      pause.setAttribute('aria-pressed', String(paused));
+      pause.textContent = paused ? 'Resume motion' : 'Pause motion';
+    });
+  }
+  var form = document.getElementById('partnerForm');
+  if (!form || !window.fetch || !window.FormData) return;
+  var sending = false;
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (sending || !form.reportValidity()) return;
+    var trap = form.querySelector('[name="_gotcha"]');
+    if (trap && trap.value) return;
+    var note = form.querySelector('.field-note');
+    var button = form.querySelector('button[type="submit"]');
+    sending = true;
+    button.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    note.className = 'field-note is-busy';
+    note.textContent = 'Sending your partnership inquiry…';
+    var controller = window.AbortController ? new AbortController() : null;
+    var timeout = controller ? setTimeout(function () { controller.abort(); }, 20000) : null;
+    var options = {method:'POST', body:new FormData(form), headers:{Accept:'application/json'}};
+    if (controller) options.signal = controller.signal;
+    fetch(form.action, options).then(function (response) {
+      if (!response.ok) throw new Error('Submission failed');
+      form.reset();
+      note.className = 'field-note is-ok';
+      note.textContent = 'Thank you — your partnership inquiry was submitted. We will reply by email.';
+    }).catch(function () {
+      note.className = 'field-note is-err';
+      note.textContent = 'We could not confirm submission. Your details are still here. Please try again, or email info@lotusintell.com directly.';
+    }).then(function () {
+      if (timeout) clearTimeout(timeout);
+      sending = false;
+      button.disabled = false;
+      form.removeAttribute('aria-busy');
+    });
+  });
+})();
